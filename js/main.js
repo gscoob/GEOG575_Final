@@ -280,8 +280,8 @@
                         .attr("id", "guess_"+st)
                         .attr("x", xy[0])
                         .attr("y", xy[1])
-                        .attr("width", ratW)
-                        .attr("height", ratH)
+                        .attr("width", "100")
+                        .attr("height", "100")
                         .attr("xlink:href", "../img/guess.png")
 
                     d3.select("#guess_"+st)
