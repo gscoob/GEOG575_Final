@@ -267,8 +267,6 @@
                     var newW = Math.floor(Math.random() * 60)
                     if (newW < 14) {ratW = 14} else {ratW = newW}
                     ratH = Math.floor(ratW/ratA)
-                    ratH.toString()
-                    ratW.toString()
 
                     var statexy = centroids[Math.floor(Math.random() * centroids.length)];
                     var st = statexy[0,0]
@@ -276,15 +274,14 @@
 
                     d3.select(".map")
                         .append("svg:image")
-                        .attr("xlink:href", "../img/guess.png")
+                        .attr("xlink:href", "/img/guess.png")
                         .attr("class", "guess")
                         .attr("id", "guess_"+st)
                         .attr("x", xy[0])
                         .attr("y", xy[1])
-                        .attr("width", "100")
-                        .attr("height", "100");
+                        .attr("width", ratW)
+                        .attr("height", ratH);
                         
-
                     d3.select("#guess_"+st)
                         .transition()
                         .delay(function(){return ((Math.floor(Math.random() * 500)));})
