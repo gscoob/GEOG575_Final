@@ -1,0 +1,13 @@
+q_id,question,answer_state,answer_text
+q01,has the highest average elevation,CO,"With an average elevation of 6,800 ft, Colorado is almost 3x higher than the US average (2,500 ft)."
+q02,has the most foreign-born residents,CA,More than one out of four residents of California (27%) are foreign born -- almost 10.5 million total!
+q03,has experienced the most natural disasters,TX,"Since 1953, Texas has endured 254 natural disasters, which is nearly 8% of the US total over that period."
+q04,has the highest population density,NJ,"New Jersey is our most crowded state, cramming nearly 9 million people into just 7,354 square miles. "
+q05,has the highest paid teachers,NY,"Teachers in New York make just under $80,000 a year, or 30% over the national average."
+q06,has the most colleges & universities per capita,VT,"While Texas has the most (299), Vermont has the highest density, with 1 college for every 28,300 residents (22 total)."
+q07,has the most prisoners per capita,OK,"Yikes! 1 out of every 100 people in Oklahoma is incarcerated.  But Texas has the most prisoners overall with 218,500."
+q08,has the highest average family size,UT,"The average household size in Utah is 3.13 people.  So that would be Mom, Dad, Kid and...goldfish?"
+q09,has the most woman-owned businesses,GA,Over 40% of all businesses in Georgia are woman-owned.
+q10,has the most kids (under the age of 18),UT,Nearly 30% of Utah's residents are under the age of 18 (and less than 12% are over 65).  Is the Great Salt Lake a fountain of youth?
+q11,has the most elderly (65 years or older),ME,"Despite Florida's reputation as a retirement haven, Maine is actually our ""oldest"" state with 21% elder population."
+q12,is the most ethnically diverse,CA,"Ethnic diversity in California is 63.2% of the total population, just eking out New Mexico in 2nd place with 62.9%."

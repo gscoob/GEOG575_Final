@@ -1,0 +1,285 @@
+/* Stylesheet by Greg Farnsworth, 2019 */
+html {
+	cursor: url(../img/cursor_wh.ico), context-menu;
+/*    overflow: hidden;*/
+}
+
+body {
+    margin: 0;
+}
+
+.background-image {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+ 	position: absolute;
+	width: 100%;
+    height: 100%;
+	top: 0;
+	left: 0;
+    background: url(../img/map.jpg); 	
+	z-index: -1;
+	opacity: 0.25;
+}
+
+#mapvid {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+    z-index: -10;
+    opacity: 0.4;
+}
+
+header {
+    display: block;
+    text-align: center;
+    font-family: 'Ruda';
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 100%;
+    height: 69px;
+    z-index: -1;
+}
+
+#title {
+    margin-top: 10px;
+    padding-top: 15px;
+    font-size: 2.2em;
+    font-weight: bold;
+}
+
+#rules {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    font-weight: normal;
+    font-family: 'Comfortaa';
+}
+
+.controls {
+  margin: 15px 0px 10px 0px;;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  border: none; 
+}
+
+.selector {
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: expanded;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #666;
+  font-family: 'Patrick Hand SC';
+    visibility: visible;
+}
+
+.selector:hover {
+    background-color: #3e8e41
+}
+
+.selector:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #333;
+  transform: translateY(4px);
+}
+
+.centroid {
+    fill: rgba(255, 49, 255, 1);
+    stroke: rgba(0, 0, 0, 1);
+    stroke-width: 1;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-around;
+}
+
+
+.map {
+    border: thick solid #666;
+    margin: 10px 0 0 0;
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+}
+
+
+.countries {
+    fill: #FFF;
+    stroke: #CCC;
+    stroke-width: 2px;
+}
+
+.gratBackground {
+    fill: rgba(213, 227, 255, 0.9);
+}
+
+.gratLines {
+    fill: none;
+    stroke: #999;
+    stroke-width: 1px;
+    opacity: 0.8;
+}
+
+.states {
+    stroke: #000;
+    stroke-width: 0.5px;
+    stroke-linecap: round;
+}
+
+
+.infolabel {
+    font-family: 'Comfortaa';
+    position: absolute;
+    height: auto;
+    width: auto;
+    min-width: 100px;
+    color: #fff;
+    background-color: #4CAF50;
+    border: solid thick #666;
+    border-radius: 10px;
+    padding: 5px 10px;
+    top: -75px;
+    z-index: 100;
+}
+
+.infolabel h2 {
+    margin: 10px 0px 15px 10px;
+    padding: 0;
+    display: block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.infogoo h2 {
+    margin: 0px 10px 10px 25px;
+    padding: 0;
+    display: block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+#inf {
+    font: italic 90% Verdana, sans-serif;
+}
+
+.alert {
+    display: none;
+}
+
+.resultsbox {
+    cursor: pointer;
+    position: absolute;
+    height: auto;
+    width: 100%;
+    min-width: 100px;
+    padding: 5px;
+    top: 0px;
+    z-index: 100;
+    background-color: none;
+    color: white;
+    border: thick solid #999;
+    font-family: 'Annie Use Your Telescope';
+    font-size: 2em;
+    visibility: hidden;  
+    opacity: 0;
+}
+
+.resultsbox h2 {
+    margin: 0px 0px 0px 30px;
+    display: block;
+    text-align: left;
+}
+
+.resultsgoo {
+    visibility: inherit;
+    opacity: inherit;
+}
+
+.resultsgoo h2 {
+    margin: 0px 0px 0px 0px;
+    display: block;
+    text-align: center;
+    font-family: 'Patrick Hand SC';
+    font-size: 1em;
+    text-decoration: none;
+}
+
+#res {
+    position: relative;
+    top: -20px;
+    margin-bottom: 10px;
+}
+
+#res2 {
+    font-size: 0.75em;
+    font-family: 'Patrick Hand';
+    position: relative;
+    top: -15px;
+}
+
+.gameoverbox {
+    cursor: pointer;
+    position: absolute;
+    height: auto;
+    width: 100%;
+    min-width: 100px;
+    padding: 5px;
+    top: 300px;
+    z-index: 100;
+    background-color: none;
+    color: white;
+    border: thick solid #999;
+    font-family: 'Annie Use Your Telescope';
+    font-size: 2em;
+    visibility: hidden;  
+    opacity: 0;
+}
+
+.gameoverbox h2 {
+    margin: 0px 0px 0px 30px;
+    display: block;
+    text-align: center;
+}
+
+.gameovergoo {
+    visibility: inherit;
+    opacity: inherit;
+}
+
+.gameovergoo h2 {
+    margin: 0px 0px 0px 0px;
+    display: block;
+    text-align: center;
+    font-family: 'Patrick Hand SC';
+    font-size: 1em;
+    text-decoration: none;
+}
+
+#gos {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+#gos2 {
+    font-size: 0.75em;
+    font-family: 'Patrick Hand';
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.guess {
+    opacity: 0;
+    pointer-events: none;
+}
