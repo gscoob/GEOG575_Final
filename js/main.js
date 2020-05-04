@@ -267,6 +267,8 @@
                     var newW = Math.floor(Math.random() * 60)
                     if (newW < 14) {ratW = 14} else {ratW = newW}
                     ratH = Math.floor(ratW/ratA)
+                    ratH.toString()
+                    ratW.toString()
 
                     var statexy = centroids[Math.floor(Math.random() * centroids.length)];
                     var st = statexy[0,0]
