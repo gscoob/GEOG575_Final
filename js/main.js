@@ -280,7 +280,7 @@
                         .attr("y", xy[1])
                         .attr("width", ratW)
                         .attr("height", ratH)
-                        .attr("xlink:href", "img/guess.png")
+                        .attr("xlink:href", "../img/guess.png")
 
                     d3.select("#guess_"+st)
                         .transition()
