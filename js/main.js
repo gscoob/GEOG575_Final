@@ -1,4 +1,6 @@
 // JavaScript by Greg Farnsworth, 2020
+// Final Commit 5/5/2020
+//
 
 (function(){
 
