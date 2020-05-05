@@ -36,7 +36,12 @@
         questionArray = ["q_id",
                          "question",
                          "answer_state",
-                         "answer_text"],
+                         "answer_text",
+                         "raw_prefix",
+                         "raw_suffix",
+                         "norm_prefix",
+                         "norm_suffix"
+                        ],
         reactArray = [ ["Great job!",
                         "Way to go!",
                         "You really know your stuff!",
@@ -49,7 +54,8 @@
                         "Time to hit the books..."]
                      ];
 
-    var expressed = answerArray[4],
+    var expressed = answerArray[8],
+        displayed = answerArray[7],
         questionText = "NULL",
         questionID = "NULL",
         selectedSateName = "NULL",
@@ -61,8 +67,8 @@
         answerText = "NULL",
         answerState = "NULL";
     
-    var mapWidth = window.innerWidth * 0.75,
-        minHeight = 650;
+    var mapWidth = window.innerWidth * 0.65,
+        boxWidth = window.innerWidth * 0.10;
 
     var mapHeight = window.innerHeight * 0.75;
     
@@ -74,6 +80,8 @@
     var answerData;
     var colorClasses;
     var runOnce = false;
+    
+    var comma = d3.format(",");
 
     
     
@@ -87,8 +95,10 @@
         gameStatus = "Loading"
         runOnce = true;
         
-        buildHeader();
-        
+        buildHeader()
+        buildRuleBox()
+//        buildScoreBox()
+
         //create new svg container for the map
         var map = d3.select(".flex")
             .append("svg")
@@ -96,11 +106,13 @@
             .attr("width", mapWidth)
             .attr("height", mapHeight);
         
+
+        
         //create Albers equal area conic projection centered on us
         var projection = d3.geoAlbers()
               .parallels([32, 45])
               .rotate([99, 0])
-              .center([-2, 40.25])
+              .center([2, 40.25])
               .scale(1300);
 
         var path = d3.geoPath()
@@ -157,6 +169,60 @@
 //            .text('Click the button to select a question about the "Lower 48" states.  Then click on the state you think is the correct answer.');
     };
         
+    
+    function buildRuleBox(){
+    
+        var ruleH = "How To Play"
+        var rule1 = '<span id="rul">1. Click on the Green Button to Select a Question</span>'
+        var rule2 = '<span id="rul">2. Click on a State to Choose Your Answer</span><br><br>A banner will appear across the top of the page revealing the correct answer. Click anywhere on the banner to remove it.'
+        var rule3 = '<span id="rul">3. Click the Green Button to Select the Next Question</span><br><br>Once oyu have seen all the quesitons the game will end. To play again, simply click the Game Over banner.'
+        
+        console.log(boxWidth)
+        console.log(mapHeight)
+        d3.select("body")
+            .append("div")
+            .attr("class", "rulebox")            
+    
+        d3.select(".rulebox")
+            .append("div")
+            .attr("class", "rulehead")
+            .html(ruleH);
+        d3.select(".rulebox")
+            .append("div")
+            .attr("class", "rulegoo")
+            .html(rule1);
+        d3.select(".rulebox")
+            .append("div")
+            .attr("class", "rulegoo")
+            .html(rule2);  
+        d3.select(".rulebox")
+            .append("div")
+            .attr("class", "rulegoo")
+            .html(rule3); 
+    }
+    
+    
+    
+    function buildScoreBox(){
+    
+        var ruleH = "Score"
+        var rule1 = "Did this..."
+        var rule2 = "Did that..."
+        
+        var scorebox = d3.select("body")
+            .append("div")
+            .attr("class", "scorebox")
+        
+        scorebox.append("div")
+            .attr("class", "scorehead")
+            .html(ruleH);
+        scorebox.append("div")
+            .attr("class", "scoregoo")
+            .html(rule1);
+        scorebox.append("div")
+            .attr("class", "scoregoo")
+            .html(rule2);  
+    }
     
     function drawGraticule(map, path){
         
@@ -254,7 +320,7 @@
             .style("fill", "#ddd")
             .style("stroke", "#000")
             .style("stroke-width", "0.25px");
-        
+
         if (runOnce) {
             d3.select(".map").style("pointer-events", "none")
             var ratW = 14
@@ -274,7 +340,7 @@
 
                     d3.select(".map")
                         .append("svg:image")
-                        .attr("xlink:href", "/img/guess.png")
+                        .attr("xlink:href", "../img/guess.png")
                         .attr("class", "guess")
                         .attr("id", "guess_"+st)
                         .attr("x", xy[0])
@@ -311,7 +377,7 @@
  //               d3.select(".map").style("pointer-events", "auto")
             })
         }
-        gameStats = "Playing"
+        gameStatus = "Playing"
         runOnce = false;
     };
     
@@ -427,8 +493,6 @@
         runAnimation(xy)
         
         setTimeout(showResults, 7000, props);
- //       showResults(props)
-
     };
     
     function shiftCentroid(st,mp){
@@ -483,21 +547,27 @@
     
     function loadAnswers(){
         
-        var maxData = d3.max(answerData, function(d) { return parseFloat(d[expressed]); })
-        var minData = d3.min(answerData, function(d) { return parseFloat(d[expressed]); })
+        answerData.sort(function(a, b){return d3.descending(a[expressed], b[expressed]);});
         
-        for (var i=0; i<answerData.length; i++){
-            if (answerData[i][expressed] == maxData){
-                correctStateName = answerData[i]["geo_name"]
-                correctStateID = answerData[i]["geo_id"]
-            } else {
-                if (answerData[i][expressed] == minData){
-                    lowestStateName = answerData[i]["geo_name"]
-                    lowestStateID = answerData[i]["geo_id"]
-                }
-            }
-        };    
-        
+        correctStateID = answerData[0]["geo_id"]
+        correctStateName = answerData[0]["geo_name"]
+
+//        var maxData = d3.max(answerData, function(d) { return parseFloat(d[expressed]); })
+//        var minData = d3.min(answerData, function(d) { return parseFloat(d[expressed]); })
+//        
+//        for (var i=0; i<answerData.length; i++){
+//            
+//            if (answerData[i][expressed] == maxData){
+//                correctStateName = answerData[i]["geo_name"]
+//                correctStateID = answerData[i]["geo_id"]
+//            } else {
+//                if (answerData[i][expressed] == minData){
+//                    lowestStateName = answerData[i]["geo_name"]
+//                    lowestStateID = answerData[i]["geo_id"]
+//                }
+//            }
+//        };    
+
         if (selectedStateID == correctStateID) {playerResults = 0} else {playerResults = 1}
     };
     
@@ -591,7 +661,7 @@
         var playerAttribute = '<h2>' + reactText + '</h2>';
         
         //create info label div
-        var infolabel = d3.select(".flex")
+        var bannerResults = d3.select(".flex")
             .append("div")
             .attr("class", "resultsbox")
             .style("background-color", reactColor)
@@ -633,7 +703,7 @@
         var playerAttribute = '<h2>GAME OVER</h2>';
         
         //create info label div
-        var infolabel = d3.select(".flex")
+        var bannerGameOver = d3.select(".flex")
             .append("div")
             .attr("class", "gameoverbox")
             .style("background-color", "blue")
@@ -707,14 +777,17 @@
             
     //function to highlight enumeration units and bars
     function highlight(props){
-        if (gameStatus == "Playing") { 
-            //change stroke
-            var selected = d3.selectAll("." + props.geo_id)
-                .style("stroke", "blue")
-                .style("stroke-width", "3");
+        switch(gameStatus) {
+            case "Playing":
+                var selected = d3.selectAll("." + props.geo_id)
+                    .style("stroke", "blue")
+                    .style("stroke-width", "3");
+                setInfoSelect(props);
+                break;
+            case "Finished":
+                setInfoResult(props);
+                break;
         }
-        
-        setInfobox(props);
     };
     
     
@@ -747,19 +820,21 @@
         
 
     //function to create dynamic label
-    function setInfobox(props){
+    function setInfoSelect(props){
         
         var stateName = "Click to Select " + props.geo_name.toUpperCase() + " as the Answer"
-        var infoAttribute1 = "Text One"
-        var infoAttribute2 = "Tect Two"
+        var infoAttribute1 = "Population: " + comma(props.geo_pop) 
+        var infoAttribute2 = "Land Area: " + comma(Math.floor(props.geo_acres/640)) + " sq miles"
         
         //create info label div
         var infolabel = d3.select("body")
             .append("div")
             .attr("class", "infolabel")
-            .attr("id", props.geo_id + "_label")
+            .attr("id", props.geo_id + "_label");
+        
+        infolabel.append("div")
+            .attr("class", "infohead")
             .html(stateName);
-
         infolabel.append("div")
             .attr("class", "infogoo")
             .html(infoAttribute1);
@@ -769,6 +844,38 @@
     };
 
     
+    function setInfoResult(props){
+        
+        function nth(n){return["st","nd","rd"][((n+90)%100-10)%10-1]||"th"};
+
+        var idxRank = answerData.findIndex(function (i) {return i.geo_id === props.geo_id})+1
+        var ordRank = idxRank + nth(idxRank)
+        
+        var showRaw = comma(Math.round(props[displayed]))
+        var showNorm = comma(Math.round((props[expressed]-1)*100))    
+
+        var idxLoad = questionData.findIndex(function (i) {return i.q_id === questionID})
+
+        var stateName = props.geo_name.toUpperCase() + " is ranked " + ordRank + " on this question!"
+        var infoAttribute1 = questionData[idxLoad].raw_prefix + " " + showRaw + " " + questionData[idxLoad].raw_suffix
+        var infoAttribute2 = questionData[idxLoad].norm_prefix + " " + showNorm + " " + questionData[idxLoad].norm_suffix
+        
+        //create info label div
+        var infolabel = d3.select("body")
+            .append("div")
+            .attr("class", "infolabel")
+            .attr("id", props.geo_id + "_label");
+        
+        infolabel.append("div")
+            .attr("class", "infohead")
+            .html(stateName);
+        infolabel.append("div")
+            .attr("class", "infogoo")
+            .html(infoAttribute1);
+        infolabel.append("div")
+            .attr("class", "infogoo")
+            .html(infoAttribute2);
+    };   
 
     function moveInfobox(){
         //get width of label

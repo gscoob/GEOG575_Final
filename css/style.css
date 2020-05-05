@@ -17,12 +17,12 @@ body {
     height: 100%;
 	top: 0;
 	left: 0;
-/*    background: url(../img/map.jpg); 	*/
-	z-index: -1;
-	opacity: 0.25;
+    background-image: url(../img/us_map.jpg); 	
+	z-index: -10;
+	opacity: 0.4;
 }
 
-#mapvid {
+/*#mapvid {
   position: fixed;
   right: 0;
   bottom: 0;
@@ -30,7 +30,7 @@ body {
   min-height: 100%;
     z-index: -10;
     opacity: 0.4;
-}
+}*/
 
 header {
     display: block;
@@ -105,7 +105,71 @@ header {
   justify-content: space-around;
 }
 
+.rulebox {
+    font-family: 'Ruda';
+    position: absolute;
+    display: block;
+    color: #222;
+    background-color: #eee;
+    border: solid thick #666;
+    z-index: 100;
+    top: 167px;
+    left: 17px;
+    width: 207px;
+    height: 596px;
+}
 
+.rulehead {
+    margin: 20px 10px 10px 10px;
+    display: block;
+    text-align: center;
+    font-size: 1.9em;
+    font-weight: bolder;
+}
+
+.rulegoo {
+    font-family: 'Comfortaa';
+    margin: 30px 10px 0px 10px;
+    display: block;
+    text-align: center;
+    font-size: 1em;
+    font-weight: bold;
+    border: solid normal #666;
+}
+
+#rul {
+    font-size: 1.2em;
+}
+
+.scorebox {
+    font-family: 'Comfortaa';
+    position: absolute;
+    display: block;
+    color: #222;
+    background-color: #eee;
+    border: solid thick #666;
+    z-index: 100;
+    top: 167px;
+    left: 1247px;
+    width: 207px;
+    height: 596px;
+}
+
+.scorehead {
+    margin: 10px;
+    display: block;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+
+.scoregoo {
+    margin: 0px 10px 10px 10px;
+    display: block;
+    text-align: center;
+    font-size: 1em;
+    font-weight: bold;
+}
 .map {
     border: thick solid #666;
     margin: 10px 0 0 0;
@@ -149,25 +213,23 @@ header {
     background-color: #4CAF50;
     border: solid thick #666;
     border-radius: 10px;
-    padding: 5px 10px;
-    top: -75px;
     z-index: 100;
 }
 
-.infolabel h2 {
-    margin: 10px 0px 15px 10px;
-    padding: 0;
+.infohead {
+    margin: 10px;
     display: block;
-    text-align: left;
-    vertical-align: middle;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bolder;
 }
 
-.infogoo h2 {
-    margin: 0px 10px 10px 25px;
-    padding: 0;
+.infogoo {
+    margin: 0px 10px 10px 10px;
     display: block;
-    text-align: left;
-    vertical-align: middle;
+    text-align: center;
+    font-size: 1em;
+    font-weight: bold;
 }
 
 #inf {
