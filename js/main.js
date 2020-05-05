@@ -1,38 +1,17 @@
 // JavaScript by Greg Farnsworth, 2020
 
 (function(){
+
+//===========================//
+//==pseudo-global variables==//
     
-    //pseudo-global variables
     var answerArray = ["geo_id",
                        "geo_name",
                        "geo_abbrv",
                        "geo_pop",
                        "geo_acres",
-                       "geo_dens",
-                       "q01raw",
-                       "q01norm",
-                       "q02raw",
-                       "q02norm",
-                       "q03raw",
-                       "q03norm",
-                       "q04raw",
-                       "q04norm",
-                       "q05raw",
-                       "q05norm",
-                       "q06raw",
-                       "q06norm",
-                       "q07raw",
-                       "q07norm",
-                       "q08raw",
-                       "q08norm",
-                       "q09raw",
-                       "q09norm",
-                       "q10raw",
-                       "q10norm",
-                       "q11raw",
-                       "q11norm",
-                       "q12raw",
-                       "q12norm"],
+                       "geo_dens"
+                      ],
         questionArray = ["q_id",
                          "question",
                          "answer_state",
@@ -54,8 +33,8 @@
                         "Time to hit the books..."]
                      ];
 
-    var expressed = answerArray[8],
-        displayed = answerArray[7],
+    var expressed = "NULL",
+        displayed = "NULL",
         questionText = "NULL",
         questionID = "NULL",
         selectedSateName = "NULL",
@@ -84,8 +63,9 @@
     var comma = d3.format(",");
 
     
+//==================================//    
+//==begin script when window loads==//
     
-    //begin script when window loads
     window.onload = setPage();
 
     
@@ -94,7 +74,7 @@
         
         gameStatus = "Loading"
         runOnce = true;
-        
+
         buildHeader()
         buildRuleBox()
 //        buildScoreBox()
@@ -105,8 +85,6 @@
             .attr("class", "map")
             .attr("width", mapWidth)
             .attr("height", mapHeight);
-        
-
         
         //create Albers equal area conic projection centered on us
         var projection = d3.geoAlbers()
@@ -129,7 +107,12 @@
 
             questionData = csvQs;
             answerData = csvAs;
-            
+
+            for (var i=0; i<questionData.length; i++){
+                answerArray.push(questionData[i].q_id+"raw")
+                answerArray.push(questionData[i].q_id+"norm")
+            }
+
             createButtons(questionData);
             
             //place graticule on the map
@@ -162,11 +145,6 @@
             .append("div")
             .attr("id", "title")
             .text('The "Lower 48" Geo Quiz');
-
-//        var headRules = d3.select(".header")
-//            .append("div")
-//            .attr("id", "rules")
-//            .text('Click the button to select a question about the "Lower 48" states.  Then click on the state you think is the correct answer.');
     };
         
     
@@ -177,8 +155,6 @@
         var rule2 = '<span id="rul">2. Click on a State to Choose Your Answer</span><br><br>A banner will appear across the top of the page revealing the correct answer. Click anywhere on the banner to remove it.'
         var rule3 = '<span id="rul">3. Click the Green Button to Select the Next Question</span><br><br>Once oyu have seen all the quesitons the game will end. To play again, simply click the Game Over banner.'
         
-        console.log(boxWidth)
-        console.log(mapHeight)
         d3.select("body")
             .append("div")
             .attr("class", "rulebox")            
@@ -490,90 +466,24 @@
         displayed = questionID+"raw";
 
         loadAnswers()
-        runAnimation(xy)
+        runAnimation(xy) 
         
         setTimeout(showResults, 7000, props);
     };
     
-    function shiftCentroid(st,mp){
-        switch(st) {
-            case "CA":
-                mp[0] = mp[0]-5
-                mp[1] = mp[1]+5
-                return mp;
-                break;
-            case "FL":
-                mp[0] = mp[0]+15
-                return mp;
-                break;
-            case "LA":
-                mp[0] = mp[0]-10
-                return mp;
-                break;
-            case "MA":
-                mp[1] = mp[1]-3
-                return mp;
-                break;
-            case "MD":
-                mp[0] = mp[0]+5
-                mp[1] = mp[1]-3
-                return mp;
-                break;
-            case "MI":
-                mp[0] = mp[0]+10
-                mp[1] = mp[1]+15
-                return mp;
-                break;
-            case "NJ":
-                mp[0] = mp[0]+5
-                return mp;
-                break;
-            default:
-                return mp;
-        }
-    }
-    
-    function spinStar(xy){
-        d3.select("#star")
-            .transition()
-            .duration(300)
-            .attr("transform", "translate("+xy[0]+","+xy[1]+")scale(2.5)rotate(120)")
-            .transition()
-            .delay(310)
-            .duration(300)
-            .attr("transform", "translate("+xy[0]+","+xy[1]+")scale(1)rotate(-120)");
-    }
-    
-    
     function loadAnswers(){
-        
-        answerData.sort(function(a, b){return d3.descending(a[expressed], b[expressed]);});
-        
+
+        answerData.sort(function(a, b){return d3.descending(parseFloat(a[expressed]), parseFloat(b[expressed]));});
+
         correctStateID = answerData[0]["geo_id"]
         correctStateName = answerData[0]["geo_name"]
 
-//        var maxData = d3.max(answerData, function(d) { return parseFloat(d[expressed]); })
-//        var minData = d3.min(answerData, function(d) { return parseFloat(d[expressed]); })
-//        
-//        for (var i=0; i<answerData.length; i++){
-//            
-//            if (answerData[i][expressed] == maxData){
-//                correctStateName = answerData[i]["geo_name"]
-//                correctStateID = answerData[i]["geo_id"]
-//            } else {
-//                if (answerData[i][expressed] == minData){
-//                    lowestStateName = answerData[i]["geo_name"]
-//                    lowestStateID = answerData[i]["geo_id"]
-//                }
-//            }
-//        };    
-
-        if (selectedStateID == correctStateID) {playerResults = 0} else {playerResults = 1}
-    };
+        if (selectedStateID == correctStateID) {playerResults = 0} else {playerResults = 1}        
+    }
     
-                   
+    
     function runAnimation(xy){
-        
+
         var colorScale = quantileColorScale(answerData);
         
         var arrStates = [];
@@ -850,12 +760,17 @@
 
         var idxRank = answerData.findIndex(function (i) {return i.geo_id === props.geo_id})+1
         var ordRank = idxRank + nth(idxRank)
-        
+       
         var showRaw = comma(Math.round(props[displayed]))
-        var showNorm = comma(Math.round((props[expressed]-1)*100))    
+        
+        if (questionID==="q06"){
+            var showNorm = comma(Math.round(props.geo_pop/props.q06raw))
+        } else {
+            var showNorm = comma(Math.round(props[expressed],1)) 
+        }
 
         var idxLoad = questionData.findIndex(function (i) {return i.q_id === questionID})
-
+        
         var stateName = props.geo_name.toUpperCase() + " is ranked " + ordRank + " on this question!"
         var infoAttribute1 = questionData[idxLoad].raw_prefix + " " + showRaw + " " + questionData[idxLoad].raw_suffix
         var infoAttribute2 = questionData[idxLoad].norm_prefix + " " + showNorm + " " + questionData[idxLoad].norm_suffix
@@ -975,5 +890,53 @@
         }  
     }
 
+    function shiftCentroid(st,mp){
+        switch(st) {
+            case "CA":
+                mp[0] = mp[0]-5
+                mp[1] = mp[1]+5
+                return mp;
+                break;
+            case "FL":
+                mp[0] = mp[0]+15
+                return mp;
+                break;
+            case "LA":
+                mp[0] = mp[0]-10
+                return mp;
+                break;
+            case "MA":
+                mp[1] = mp[1]-3
+                return mp;
+                break;
+            case "MD":
+                mp[0] = mp[0]+5
+                mp[1] = mp[1]-3
+                return mp;
+                break;
+            case "MI":
+                mp[0] = mp[0]+10
+                mp[1] = mp[1]+15
+                return mp;
+                break;
+            case "NJ":
+                mp[0] = mp[0]+5
+                return mp;
+                break;
+            default:
+                return mp;
+        }
+    }
+    
+    function spinStar(xy){
+        d3.select("#star")
+            .transition()
+            .duration(300)
+            .attr("transform", "translate("+xy[0]+","+xy[1]+")scale(2.5)rotate(120)")
+            .transition()
+            .delay(310)
+            .duration(300)
+            .attr("transform", "translate("+xy[0]+","+xy[1]+")scale(1)rotate(-120)");
+    }
         
 })(); //last line of main.js
