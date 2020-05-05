@@ -29,8 +29,8 @@
                        ["Oh, so close...",
                         "You almost had it...",
                         "Missed it by that much...",
-                        "That's gotta hurt...",
-                        "Time to hit the books..."]
+                        "That's a tough loss...",
+                        "Who knew..."]
                      ];
 
     var expressed = "NULL",
@@ -153,7 +153,7 @@
         var ruleH = "How To Play"
         var rule1 = '<span id="rul">1. Click on the Green Button to Select a Question</span>'
         var rule2 = '<span id="rul">2. Click on a State to Choose Your Answer</span><br><br>A banner will appear across the top of the page revealing the correct answer. Click anywhere on the banner to remove it.'
-        var rule3 = '<span id="rul">3. Click the Green Button to Select the Next Question</span><br><br>Once oyu have seen all the quesitons the game will end. To play again, simply click the Game Over banner.'
+        var rule3 = '<span id="rul">3. Click the Green Button to Select the Next Question</span><br><br>Once you have seen all the questions the game will end. To play again, simply click the Game Over banner.'
         
         d3.select("body")
             .append("div")
@@ -609,7 +609,7 @@
         
         //label content
         var infoAttribute1 = '<h2 id="gos">Thank you for playing!</h2>';
-        var infoAttribute2 = '<h2 id="gos2">Hopefully you enjoyed learning more about the geogrpahy of the Lower 48.</h2>';
+        var infoAttribute2 = '<h2 id="gos2">Hopefully you enjoyed learning more about the geography of the "Lower 48" states.</h2>';
         var playerAttribute = '<h2>GAME OVER</h2>';
         
         //create info label div
