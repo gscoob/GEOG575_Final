@@ -53,7 +53,7 @@
 
     var mapHeight = window.innerHeight * 0.75;
     
-    var playerResults, gameStatus;
+    var playerResults, gameStatus, scorAi, scorCi, scorSi;
     var radius = 10;
     var centroids, areas, remainQsArray;
     
@@ -79,7 +79,6 @@
 
         buildHeader()
         buildRuleBox()
-//        buildScoreBox()
 
         //create new svg container for the map
         var map = d3.select(".flex")
@@ -135,6 +134,9 @@
 
             //add enumeration units to the map
             drawStates(mState, map, path);
+            
+            buildScoreBox();
+            
         };
     }; //end of setMap()
 
@@ -183,9 +185,18 @@
     
     function buildScoreBox(){
     
-        var ruleH = "Score"
-        var rule1 = "Did this..."
-        var rule2 = "Did that..."
+        var scorH = "Game Progress"
+        var scor1 = '<span id="sco">Remaining</span>'
+        var scor2 = '<span id="sco">Answered</span>'
+        var scor3 = '<span id="sco">Correct</span>'
+        var scor4 = '<span id="sco">Score</span>'
+        
+        var scorR = questionData.length - 1
+        var scorA = "0"
+        var scorC = "?"
+        var scorS = "?"
+        
+        scorAi = scorCi = scorSi = 0
         
         var scorebox = d3.select("body")
             .append("div")
@@ -193,13 +204,35 @@
         
         scorebox.append("div")
             .attr("class", "scorehead")
-            .html(ruleH);
+            .html(scorH);
         scorebox.append("div")
             .attr("class", "scoregoo")
-            .html(rule1);
+            .html(scor1);
+         scorebox.append("div")
+            .attr("class", "scorenbr")
+            .attr("id", "scorR")
+            .html(scorR);        
         scorebox.append("div")
             .attr("class", "scoregoo")
-            .html(rule2);  
+            .html(scor2);
+         scorebox.append("div")
+            .attr("class", "scorenbr")
+            .attr("id", "scorA")
+            .html(scorA);
+        scorebox.append("div")
+            .attr("class", "scoregoo")
+            .html(scor3);
+         scorebox.append("div")
+            .attr("class", "scorenbr")
+            .attr("id", "scorC")
+            .html(scorC);
+        scorebox.append("div")
+            .attr("class", "scoregoo")
+            .html(scor4);
+         scorebox.append("div")
+            .attr("class", "scorenbr")
+            .attr("id", "scorS")
+            .html(scorS);
     }
     
     function drawGraticule(map, path){
@@ -402,7 +435,11 @@
         shuffle(remainQsArray)
         questionText = remainQsArray.pop()
 
+        var scorR = remainQsArray.length - 1
+        d3.select("#scorR").html(scorR)
+        
         if(remainQsArray.length == 0){
+            var scorR = remainQsArray.length
             d3.select(".selector")
                 .text("That's all folks!  You've seen all the questions.")
                 .style("font-family", "Patrick Hand")
@@ -410,11 +447,14 @@
             d3.select(".selector").style("pointer-events", "none")
             gameOver();
         } else {
+            var scorR = remainQsArray.length - 1
             d3.select(".selector")
                 .text("Which state " + questionText + "?")
                 .style("font-family", "Patrick Hand")
             setEventListeners(true,true,false)             
         }  
+        
+        d3.select("#scorR").html(scorR)
     }
 
     
@@ -424,6 +464,8 @@
         
         setEventListeners(false, false, false);
         d3.select(".selector").style("pointer-events", "none")
+
+        d3.select("#scorA").html(++scorAi)
         
         for(var i = 0; i < centroids.length; i++) {
            if(centroids[i][0] == props.geo_id) {
@@ -602,6 +644,15 @@
         gameStatus = "Finished"
         setEventListeners(true,false,false)
         d3.select(".selector").style("pointer-events", "auto")
+        
+        if (playerResults == 0) {
+            d3.select("#scorC").html(++scorCi)
+        } else {
+            d3.select("#scorC").html(scorCi)
+        }
+        
+        scorSi = ((scorCi / scorAi) * 100).toFixed(0)+"%"
+        d3.select("#scorS").html(scorSi)
     }
     
     

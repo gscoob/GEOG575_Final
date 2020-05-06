@@ -24,16 +24,6 @@ body {
 	opacity: 0.4;
 }
 
-/*#mapvid {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-    z-index: -10;
-    opacity: 0.4;
-}*/
-
 header {
     display: block;
     text-align: center;
@@ -144,7 +134,7 @@ header {
 }
 
 .scorebox {
-    font-family: 'Comfortaa';
+    font-family: 'Ruda';
     position: absolute;
     display: block;
     color: #222;
@@ -158,20 +148,37 @@ header {
 }
 
 .scorehead {
-    margin: 10px;
+    margin: 20px 10px 10px 10px;
     display: block;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.9em;
     font-weight: bolder;
 }
 
 .scoregoo {
-    margin: 0px 10px 10px 10px;
+    font-family: 'Comfortaa';
+    margin: 30px 10px 0px 10px;
     display: block;
     text-align: center;
-    font-size: 1em;
+    font-size: 1.2em;
     font-weight: bold;
+    border: solid normal #666;
 }
+
+.scorenbr {
+    font-family: 'Ruda';
+    margin: 10px 5px 0px 5px;
+    display: block;
+    text-align: center;
+    font-size: 3em;
+    font-weight: bold;
+    border: solid normal #666;
+}
+
+#sco {
+    font-size: 1.2em;
+}
+
 .map {
     border: thick solid #666;
     margin: 10px 0 0 0;
