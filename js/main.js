@@ -816,11 +816,22 @@
        
         var showRaw = comma(Math.round(props[displayed]))
         
-        if (questionID==="q06"){
-            var showNorm = comma(Math.round(props.geo_pop/props.q06raw))
-        } else {
-            var showNorm = comma(Math.round(props[expressed],1)) 
+        switch(questionID) {
+            case "q06":
+                var showNorm = comma(Math.round(props.geo_pop/props.q06raw))
+                break;
+            case "q17":
+                var showNorm = comma(Math.round(props.geo_pop/props.q17raw))
+                break;
+            default:
+                var showNorm = comma(Math.round(props[expressed],1))
         }
+        
+//        if (questionID==="q06"){
+//            var showNorm = comma(Math.round(props.geo_pop/props.q06raw))
+//        } else {
+//            var showNorm = comma(Math.round(props[expressed],1)) 
+//        }
 
         var idxLoad = questionData.findIndex(function (i) {return i.q_id === questionID})
         
